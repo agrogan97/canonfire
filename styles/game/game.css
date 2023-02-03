@@ -1,0 +1,90 @@
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+body {
+    max-width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color:inherit; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
+
+.pageContent {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.interactions {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.interactions h1 {
+    font-size: 3rem;
+}
+
+.canvasContainer {
+    justify-content: left;
+}
+
+.instructionalText {
+    font-size: 1.5rem;
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 2rem;
+}
+
+.btnContainer button {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 2rem;
+}
+
+.btn {
+    width: 100%;
+    font-size: 2rem;
+}
+
+.chatbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 95%;
+    height: 100%;
+    margin: 0.5rem;
+    border-color: #a4a4a4;
+    border-style: solid;
+    border-radius: 2rem;
+    background-color: rgba(109, 101, 101, 0.341);
+}
+
+.chatbox input {
+    border-radius: 0 0 1.99rem 1.99rem;
+    height: auto;
+    min-height: 10%;
+    padding: 0.5rem;
+    margin: 0;
+    border-style: none;
+}
