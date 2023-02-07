@@ -1,0 +1,107 @@
+.chatbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 40%;
+    height: 50%;
+    margin: 0.5rem;
+    border-color: #a4a4a4;
+    border-style: solid;
+    border-radius: 2rem;
+    background-color: rgba(109, 101, 101, 0.341);
+    position: absolute;
+    bottom: 1%;
+}
+
+.inputDiv {
+    height: auto;
+    min-height: 10%;
+    width: 100%;
+    display: flex;
+}
+
+.chatbox input {
+    border-radius: 0 0 0 1.99rem;
+    height: auto;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0;
+    border-style: none;
+    font-size: 1.35rem;
+}
+
+.sendBtn {
+    border-radius: 0 0 2rem 0;
+    border-color: white;
+    height: auto;
+    width: 12.5%;
+    font-size: 1.5rem;
+}
+
+.messagesDiv {
+    border-radius: 1.99rem 1.99rem 0 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(9, 9, 15);
+    display: flex;
+    /* justify-content: start; */
+    flex-direction: column;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.messagesDiv::-webkit-scrollbar {
+    width: 12px;
+}
+
+.messagesDiv::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+    border-radius: 10px;
+}
+
+.messagesDiv::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+}
+
+.bubbleDiv{
+    /* Container for the icon and the message content */
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.bubble {
+    border-radius: 0.5rem 0.5rem 1.99rem 1.99rem;
+    width: fit-content;
+    height: fit-content;
+    font-size: 1.25rem;
+    padding: 1rem;
+    margin: 0.75%;
+    max-width: 80%;
+    word-wrap:break-word;
+    margin-bottom: auto;
+    
+}
+
+.me {
+    background-color: rgb(80, 122, 18);
+    color: black;
+}
+
+.you {
+    background-color: rgb(1, 67, 189);
+}
+
+.icon {
+    border-radius: 50%;
+    width: 5%;
+    height: 75%;
+    margin: 0.5rem;
+    background-color: rgb(221, 255, 218);
+    font-size: 1.5rem;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

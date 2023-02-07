@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/game/game.css">
+    <link rel="stylesheet" href="styles/game/chatbox.css">
     <script src="lib/matterJS/matter.js"></script>
     <script src="lib/p5/p5.js"></script>
     <script src="src/sketch.js"></script>
@@ -13,7 +14,6 @@
     <script src="src/components/target.js"></script>
     <script src="src/components/cannonball.js"></script>
     <script src="src/stages.js"></script>
-    <script src="src/components/chatbox.js"></script>
     <script src="src/components/goal.js"></script>
     <script src="src/components/Game.js"></script>
     <script src="src/utils/constants.js"></script>
@@ -26,20 +26,23 @@
 
         </div>
         <div class="interactions">
-            <h1><a href="landing.html">Cannon Game</a></h1>
-            <p class="instructionalText">Fire the cannons at the centre target to transform it into the goal shape!</p>
-            <div class="btnContainer">
-                <button class="btn" id="nextRound">Next Round</button>
-                <button class="btn" id="restart">Restart [3/3]</button>
+            <div class="instructions">
+                <h1><a href="landing.html">Cannon Game</a></h1>
+                <p class="instructionalText">Fire the cannons at the centre target to transform it into the goal shape!</p>
+                <div class="btnContainer">
+                    <button class="btn" id="nextRound">Next Round</button>
+                    <button class="btn" id="restart">Restart [3/3]</button>
+                </div>
             </div>
             <div class="chatbox">
-                <input type="text" placeholder="Enter message...">
             </div>
             <hr>
         </div>
     </div>
 
+    <script src="src/components/chatbox.js"></script>
     <script>
+        var chatbox = new Chatbox();
         document.getElementById("nextRound").addEventListener('click', (e) => {newRound();})
         document.getElementById("restart").addEventListener('click', (e) => {console.log("restart")});
     </script>

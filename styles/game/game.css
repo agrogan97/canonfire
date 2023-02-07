@@ -67,24 +67,11 @@ a:hover {
     font-size: 2rem;
 }
 
-.chatbox {
+.instructions {
+    position: absolute;
+    top: 1%;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    width: 95%;
-    height: 100%;
-    margin: 0.5rem;
-    border-color: #a4a4a4;
-    border-style: solid;
-    border-radius: 2rem;
-    background-color: rgba(109, 101, 101, 0.341);
-}
-
-.chatbox input {
-    border-radius: 0 0 1.99rem 1.99rem;
-    height: auto;
-    min-height: 10%;
-    padding: 0.5rem;
-    margin: 0;
-    border-style: none;
+    justify-content: center;
+    align-items: center;
 }
