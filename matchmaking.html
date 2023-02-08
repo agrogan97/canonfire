@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/landing/landing.css">
+    <script src="lib/matterJS/matter.js"></script>
+    <script src="lib/p5/p5.js"></script>
+    <script src="lib/socket.io/socket.io.js"></script>
+    <script src="src/landing.js"></script>
+    <script src="src/components/ball.js"></script>
+    <title>Cannons!</title>
+</head>
+<body>
+    <div id="bgCanvas" class="bgCanvas">
+
+    </div>
+    <div class="pageContent">
+        <h1 class="heading1">Matchmaking</h1>
+        <p class="connectionStatus" id="connectionStatus">Connection Unsuccessful</p>
+        <div class="btnContainer">
+            <input id="enterName" type="text" placeholder="Name"></input>
+            <input id="enterRoomId" type="text" placeholder="Enter room ID"></input>
+            <button id="joinGameBtn">Join Game</button>
+        </div>
+    </div>
+    <script>var socket = io.connect(':3000');</script>
+    <script src="src/utils/matchmaking.js"></script>
+</body>
+</html>

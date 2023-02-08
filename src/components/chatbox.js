@@ -1,5 +1,13 @@
+var socket = io.connect(':3000');
 class Chatbox {
     constructor() {
+        /*
+            The message flow is as follows:
+                    1) A player clicks `send` in their chatbox
+                    2) The event listener in this.newInputBox is triggered
+                    3) this.send() is called
+                    4) The socket listeners in each chatbox detect a new message and call this.newMessage()
+        */
         this.chatbox = document.getElementsByClassName("chatbox")[0]
         // Define a messages container div
         this.messagesDiv = document.createElement("div");
@@ -9,7 +17,11 @@ class Chatbox {
         // Add text input field
         this.newInputBox()
         // Define some storage
-        this.messages = {};
+        this.messages = [];
+
+        // Run socket connections
+        this.connectToRoom();
+        this.listen();
     }
 
     newInputBox() {
@@ -35,15 +47,17 @@ class Chatbox {
 
         // Attach an event listener to the send button
         sendBtn.addEventListener("click", (e) => {
+            // e.preventDefault();
             const msgContent = this.inputBox.value;
             let msg = {
                 "text" : msgContent,
-                "sender" : "A",
+                "sender" : this.introduction.name,
                 "isMe" : true,
-                "time" : Date.now()
+                "time" : Date.now(),
+                "room" : this.introduction.room
             }
             if (msgContent != ''){
-                this.newMessage(msg);
+                this.send(msg);
             }
             // Move scroll view to bottom of div
             this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
@@ -52,16 +66,18 @@ class Chatbox {
 
         // Also attach event listener for the enter key
         document.addEventListener("keypress", (e) => {
+            // e.preventDefault();
             if (e.key == "Enter") {
                 const msgContent = this.inputBox.value;
                 let msg = {
                     "text" : msgContent,
-                    "sender" : "A",
+                    "sender" : this.introduction.name,
                     "isMe" : true,
-                    "time" : Date.now()
+                    "time" : Date.now(),
+                    "room" : this.introduction.room,
                 }
                 if (msgContent != ''){
-                    this.newMessage(msg);
+                    this.send(msg);
                 }
                 this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
                 this.inputBox.value = '';
@@ -89,16 +105,56 @@ class Chatbox {
         // Create a message container div
         let bubbleBody = document.createElement("div")
         bubbleBody.classList.add("bubble");
-        message.isMe? bubbleBody.classList.add("me") : bubbleBody.classList.add("you");
+        message.sender == this.introduction.name? bubbleBody.classList.add("me") : bubbleBody.classList.add("you");
         // Create a text node
         let textNode = document.createTextNode(message.text);
-        
         
         // Add children to parent
         bubbleBody.appendChild(textNode)
         bubbleDiv.appendChild(icon);
         bubbleDiv.appendChild(bubbleBody);
         this.messagesDiv.appendChild(bubbleDiv);
+
+        // Store the message
+        this.messages.push(message)
+
+    }
+
+    // Socket methods
+
+    send(message) {
+        // Send to server
+        socket.emit('chat message', message)
+    }
+
+    listen(){
+        // Socket message listener
+        socket.on('chat message', (msg) => {
+            this.newMessage(msg);
+        })
+    }
+
+    connectToRoom(){
+        /*  Creates introduction dict as:
+                - "name" : player name
+                - "room" : room id
+            Values are taken from URL params
+        */  
+        const searchParams = new URLSearchParams(window.location.href.split('?')[1]);
+        if (!searchParams.has('room')){
+            throw "User must be redirected with `room` ID"
+        }
+        if (!searchParams.has("name")){
+            throw "User must be redirected with `name` "
+        }
+
+        this.introduction = {
+            "name" : searchParams.get("name"),
+            "room" : searchParams.get("room")
+        }
+
+        socket.emit('joinRoom', this.introduction);
+
     }
 
 }

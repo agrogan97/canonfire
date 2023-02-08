@@ -65,8 +65,17 @@ a:hover {
 }
 
 .btnContainer button:hover {
-    transform: scale(1.3);
+    transform: scale(1.2);
     cursor:pointer; 
+}
+
+.btnContainer input {
+    height: 45%;
+    font-size: 2rem;
+    cursor: text;
+    z-index: 1000;
+    pointer-events: auto;
+    margin: 1.5rem;
 }
 
 .instructions {
@@ -82,4 +91,9 @@ a:hover {
 
 .instructions br {
     margin: 1%;
+}
+
+.connectionStatus {
+    font-size: 1.25rem;
+    display: hidden;
 }

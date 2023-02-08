@@ -36,7 +36,7 @@ function setup() {
         setup() is the first function required by p5 
     */
     constants = new Constants();
-    var canvas = createCanvas(800, window.innerHeight);
+    var canvas = createCanvas(Math.floor(window.innerWidth/2), window.innerHeight);
     canvas.parent("gameDiv")
     rectMode(CENTER);
     angleMode(DEGREES);
@@ -96,6 +96,8 @@ function setup() {
 }
 
 function draw() {
+    // Keep matter engine in step with p5 engine
+    Engine.update(engine, deltaTime)
     // draw() is the second function required by p5
     background(51);
     cannons.forEach(cannon => {
