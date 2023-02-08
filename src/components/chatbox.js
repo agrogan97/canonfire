@@ -126,6 +126,9 @@ class Chatbox {
         // Store the message
         this.messages.push(message)
 
+        // Reset scroll position
+        this.messagesDiv.scrollTop = this.messagesDiv.clientHeight
+
     }
 
     // Socket methods
