@@ -93,6 +93,7 @@ function setup() {
     runner = Runner.create();
     // Run the engine
     Runner.run(runner, engine);
+    
 }
 
 function draw() {

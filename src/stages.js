@@ -84,3 +84,47 @@ function newRound(type="test") {
     }, constants.hideTimes[game.level])    
     
 }
+
+function writeInstructions() {
+    /*
+        Write game instructions as a message in the chatbox
+        TODO need to only run this once per room, otherwise it'll display N times
+    */
+
+    let adminMsg = {
+        "text" : undefined,
+        "sender" : "Guide",
+        "isMe" : false,
+        "time" : Date.now(),
+        "room" : chatbox.introduction.room
+    }
+
+    if (chatbox.isSinglePlayer) {
+        // Run as chatbox.newMessage -- Bypasses web socket
+        adminMsg.text = "Hey, I'm your tutorial bot"
+        chatbox.newMessage(adminMsg)
+        adminMsg.text = "This game's easy, but I'll walk you through it"
+        chatbox.newMessage(adminMsg)
+        adminMsg.text = "The weird rectangles are cannons - they fire cannonballs at the little box in the middle"
+        chatbox.newMessage(adminMsg)
+        adminMsg.text = "That box is your target. When you fire a cannon, it'll change the target somehow"
+        chatbox.newMessage(adminMsg)
+        adminMsg.text = "Each cannon does something different"
+        chatbox.newMessage(adminMsg)
+        adminMsg.text = "You need to put the target into a goal state. So keep firing cannons until it looks like your target"
+        chatbox.newMessage(adminMsg)
+    } else {
+        // Run as chatbox.send -- includes web socket and broadcasts
+        adminMsg.text = "Hey, I'm your tutorial bot"
+        chatbox.send(adminMsg)
+        adminMsg.text = "This game's easy, but I'll walk you through it"
+        chatbox.send(adminMsg)
+        adminMsg.text = "The weird rectangles are cannons - they fire cannonballs at the little box in the middle"
+        chatbox.send(adminMsg)
+        adminMsg.text = "That box is your target. When you fire a cannon, it'll change the target somehow"
+        chatbox.send(adminMsg)
+        adminMsg.text = "Each cannon does something different"
+        chatbox.send(adminMsg)
+        adminMsg.text = "You need to put the target into a goal state. So keep firing cannons until it looks like your target"
+    }
+}

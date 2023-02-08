@@ -20,6 +20,7 @@ class Chatbox {
         this.messages = [];
 
         // Run socket connections
+        this.isSinglePlayer = false;
         this.connectToRoom();
         this.listen();
     }
@@ -57,7 +58,7 @@ class Chatbox {
                 "room" : this.introduction.room
             }
             if (msgContent != ''){
-                this.send(msg);
+                !this.isSinglePlayer ? this.send(msg) : this.newMessage(msg);
             }
             // Move scroll view to bottom of div
             this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
@@ -77,7 +78,7 @@ class Chatbox {
                     "room" : this.introduction.room,
                 }
                 if (msgContent != ''){
-                    this.send(msg);
+                    !this.isSinglePlayer ? this.send(msg) : this.newMessage(msg);
                 }
                 this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
                 this.inputBox.value = '';
@@ -105,7 +106,14 @@ class Chatbox {
         // Create a message container div
         let bubbleBody = document.createElement("div")
         bubbleBody.classList.add("bubble");
-        message.sender == this.introduction.name? bubbleBody.classList.add("me") : bubbleBody.classList.add("you");
+        // Add context-dependent styling
+        if (message.sender == this.introduction.name) {
+            bubbleBody.classList.add("me")
+        } else if (message.sender.toLocaleLowerCase() == "admin" || message.sender.toLocaleLowerCase() == "guide") {
+            bubbleBody.classList.add("admin")
+        } else {
+            bubbleBody.classList.add("you");
+        }
         // Create a text node
         let textNode = document.createTextNode(message.text);
         
@@ -129,9 +137,13 @@ class Chatbox {
 
     listen(){
         // Socket message listener
-        socket.on('chat message', (msg) => {
-            this.newMessage(msg);
-        })
+        if (this.isSinglePlayer) {
+
+        } else {
+            socket.on('chat message', (msg) => {
+                this.newMessage(msg);
+            })
+        }   
     }
 
     connectToRoom(){
@@ -139,22 +151,27 @@ class Chatbox {
                 - "name" : player name
                 - "room" : room id
             Values are taken from URL params
-        */  
+        */
         const searchParams = new URLSearchParams(window.location.href.split('?')[1]);
         if (!searchParams.has('room')){
-            throw "User must be redirected with `room` ID"
+            this.isSinglePlayer = true;
         }
         if (!searchParams.has("name")){
-            throw "User must be redirected with `name` "
+            this.isSinglePlayer = true;
         }
-
-        this.introduction = {
-            "name" : searchParams.get("name"),
-            "room" : searchParams.get("room")
+        if (!this.isSinglePlayer) {
+            this.introduction = {
+                "name" : searchParams.get("name"),
+                "room" : searchParams.get("room")
+            }
+    
+            socket.emit('joinRoom', this.introduction);
+        } else {
+            this.introduction = {
+                "name" : "Me",
+                "room" : undefined
+            }
         }
-
-        socket.emit('joinRoom', this.introduction);
-
     }
 
 }
